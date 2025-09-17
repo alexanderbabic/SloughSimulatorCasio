@@ -134,7 +134,7 @@ GGs''')
 # =======================
 
 deathPoints = [4,24]
-checkPoints = []
+checkPoints = [3]
 savePoints = []
 options = {
     3: {"go car": 4, "go stairs": 5, "go exit": 11}, # Car park choice
@@ -197,5 +197,6 @@ def main():
     
             
 main()
+
 
 
