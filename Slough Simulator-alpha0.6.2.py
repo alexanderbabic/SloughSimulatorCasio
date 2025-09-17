@@ -89,45 +89,46 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             
     }
 def Stair_Loop(progress):
-    elif progress == 5:
-            stairInput = typingInput('Would you like to continue going up the stairs? \n')
-            if stairInput.lower() == 'no':
-                typingPrint('Wow, quitting so soon? You have no devotion to a cause so you return to where you started. SMH\n')
-                progress = 3   
-            elif stairInput.lower() == 'yes':
-                progress += 1
-        elif progress in {6,7,8,9} :
-            stairInput = typingInput('Would you like to continue? \n')
-            if stairInput.lower() == 'no':
-                typingPrint('You decide to cut your losses and return to where you started.\n')
-                progress = 3    
-            elif stairInput.lower() == 'yes':
+    if progress == 5:
+        stairInput = typingInput('Would you like to continue going up the stairs? \n')
+        if stairInput.lower() == 'no':
+            typingPrint('Wow, quitting so soon? You have no devotion to a cause so you return to where you started. SMH\n')
+            progress = 3   
+        elif stairInput.lower() == 'yes':
+            progress += 1
+    elif progress in {6,7,8,9} :
+        stairInput = typingInput('Would you like to continue? \n')
+        if stairInput.lower() == 'no':
+            typingPrint('You decide to cut your losses and return to where you started.\n')
+            progress = 3    
+        elif stairInput.lower() == 'yes':
                 progress += 1     
-        elif progress == 10:
-            stairInput = typingInput('Would you like to continue? \n')
-            if stairInput.lower() == 'yes':
-                typingPrint('''In the corners of your eyes the walls seemingly disintegrate to black, but you pay no
-    attention. You continue up the stairs…
-    You collapsed.
-                        GAME		 OVER
-    They say insanity is doing the same thing over and over again, expecting a different result…
-    GGs''')
-                progress = 0
-            elif stairInput.lower() == 'no':
-                slowPrint('.......')
-                wait(2)
-                typingPrint(' You step out.')
-                wait(2)
-                typingPrint('\nYou feel a gentle breeze, and looking above you shows a grey overcast sky.')
-                wait(2)
-                slowPrint('\nYou\'ve made it to the top flo-')
-                wait(5)
-                slowerPrint('\nCRAAAAAAAASH!')
-                wait(4)
-                typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
-                wait(3)
-                slowPrint('\nEND')
-                progress = 0
+    elif progress == 10:
+        stairInput = typingInput('Would you like to continue? \n')
+        if stairInput.lower() == 'yes':
+            typingPrint('''In the corners of your eyes the walls seemingly disintegrate to black, but you pay no
+attention. You continue up the stairs…
+You collapsed.
+                    GAME		 OVER
+They say insanity is doing the same thing over and over again, expecting a different result…
+GGs''')
+            progress = 0
+        elif stairInput.lower() == 'no':
+            slowPrint('.......')
+            wait(2)
+            typingPrint(' You step out.')
+            wait(2)
+            typingPrint('\nYou feel a gentle breeze, and looking above you shows a grey overcast sky.')
+            wait(2)
+            slowPrint('\nYou\'ve made it to the top flo-')
+            wait(5)
+            slowerPrint('\nCRAAAAAAAASH!')
+            wait(4)
+            typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
+            wait(3)
+            slowPrint('\nEND')
+            progress = 0
+    return progress
 # =======================
 # Game Flow / Options
 # =======================
@@ -176,11 +177,10 @@ def main():
         elif progress in deathPoints:
             typingPrint('GGs')
             progress = 0
-        elif progress in {5,6,7,8,9}:
-            Stair_Loop(progress)
+        elif progress in {5,6,7,8,9,10}:
+            progress = Stair_Loop(progress)
         else:
             progress += 1
             
 main()
-
 
