@@ -91,21 +91,21 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
 def Stair_Loop(progress):
     if progress == 5:
         stairInput = typingInput('Would you like to continue going up the stairs? \n')
-        if stairInput.lower() == 'no':
+        if tairInput.lower().strip() == 'no':
             typingPrint('Wow, quitting so soon? You have no devotion to a cause so you return to where you started. SMH\n')
             progress = 3   
-        elif stairInput.lower() == 'yes':
+        elif stairInput.lower().strip() == 'yes':
             progress += 1
     elif progress in {6,7,8,9} :
         stairInput = typingInput('Would you like to continue? \n')
-        if stairInput.lower() == 'no':
+        if stairInput.lower().strip() == 'no':
             typingPrint('You decide to cut your losses and return to where you started.\n')
             progress = 3    
-        elif stairInput.lower() == 'yes':
+        elif stairInput.lower().strip() == 'yes':
                 progress += 1     
     elif progress == 10:
         stairInput = typingInput('Would you like to continue? \n')
-        if stairInput.lower() == 'yes':
+        if stairInput.lower().strip() == 'yes':
             typingPrint('''In the corners of your eyes the walls seemingly disintegrate to black, but you pay no
 attention. You continue up the stairs…
 You collapsed.
@@ -113,7 +113,7 @@ You collapsed.
 They say insanity is doing the same thing over and over again, expecting a different result…
 GGs''')
             progress = 0
-        elif stairInput.lower() == 'no':
+        elif stairInput.lower().strip() == 'no':
             slowPrint('.......')
             wait(2)
             typingPrint(' You step out.')
@@ -133,14 +133,16 @@ GGs''')
 # Game Flow / Options
 # =======================
 
-choicePoints = [3, 13, 19, 27]
 deathPoints = [4,24]
+checkPoints = []
+savePoints = []
 options = {
     3: {"go car": 4, "go stairs": 5, "go exit": 11}, # Car park choice
     13: {"go junction": 25, "go house": 14}, # After taking exit
     19: {"yes": 30, "no": 20}, # Accept tesco quest?
     27: {"go tesco" : 31, "go travelodge" : 29, "go scrap metal" : 30} # junction (can also be after accepting tesco quest)
 }
+choicePoints = set(options.keys())
 days = 1
 stairCount = 0
 
@@ -151,11 +153,12 @@ stairCount = 0
 def inputCommand():
     userInput = typingInput("\nMake your choice: ")
     return userInput
+    
 def Check_Input(userIn, p):
     if userIn.lower() == "check days":
         typingPrint(f"You are on day {days}\n")
         return p
-    elif userIn in options.get(p, {}):
+    elif userIn.lower().strip() in options.get(p, {}):
         return options[p][userIn]
     else:
         typingPrint("Invalid command. Try again.\n")
@@ -167,9 +170,19 @@ def Check_Input(userIn, p):
 # =======================
 def main():
     progress = 1
-    while progress != 0:
+    while progress != -1:
         wait(0.5)
+        if progress == 0:
+            reset = typingInput('Restart at last save point? yes/no')
+            if reset.lower().strip() == 'yes':
+                progress = savePoints[-1]
+                typingPrint('returning to save point......')
+                wait(1)
+            else:
+                progress = -1
         typingPrint(dialogue[progress])
+        if progress in checkPoints:
+            savePoints.append(progress)
         if progress in choicePoints:
             userIn = inputCommand()
             newProgress = Check_Input(userIn, progress)
@@ -181,6 +194,8 @@ def main():
             progress = Stair_Loop(progress)
         else:
             progress += 1
+    
             
 main()
+
 
