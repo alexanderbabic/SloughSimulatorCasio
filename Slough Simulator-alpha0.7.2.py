@@ -84,8 +84,20 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             
             31 : 'You walk in to the Tesco. ',
             32 : '\nEntering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.'
-            
-            
+            33 : '\nYou see a worker in front. Since you can't see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.'
+            34 : '\n              '
+            35 : '\n.........'
+            36 : '\nThey disappeared before your eyes before you could talk to them.'
+            37 : '\nWeird.'
+            38 : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.'
+            39 : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n'
+            40 : '"What are you doing? Why are you holding those?\n"
+            41 : 'Looking down, the mayonnaise you were holding shifts. Your vision blurs and doubles for a moment.\n'
+            42 : '...........\n'
+            43 : 'In your hand is an orange pill bottle.\n'
+            44 : 'Looking up, in front of you is a woman wearing a lab coat.\n'
+            45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n'
+            46 : 'You black out.'
             
     }
 def Stair_Loop(progress):
@@ -198,6 +210,7 @@ def main():
     
             
 main()
+
 
 
 
