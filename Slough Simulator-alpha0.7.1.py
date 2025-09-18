@@ -189,7 +189,7 @@ def main():
             newProgress = Check_Input(userIn, progress)
             progress = newProgress
         elif progress in deathPoints:
-            typingPrint('GGs')
+            typingPrint('GGs\n')
             progress = 0
         elif progress in {5,6,7,8,9,10}:
             progress = Stair_Loop(progress)
@@ -198,6 +198,7 @@ def main():
     
             
 main()
+
 
 
 
