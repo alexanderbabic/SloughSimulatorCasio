@@ -97,7 +97,8 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             43 : 'In your hand is an orange pill bottle.\n',
             44 : 'Looking up, in front of you is a woman wearing a lab coat.\n',
             45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n',
-            46 : 'You black out.',
+            46 : 'You black out.\n',
+            47 : 'END'
 }
     
 def Stair_Loop(progress):
@@ -123,7 +124,7 @@ attention. You continue up the stairs…
 You collapsed.
                     GAME		 OVER
 They say insanity is doing the same thing over and over again, expecting a different result…
-GGs''')
+GGs\n''')
             progress = 0
         elif stairInput.lower().strip() == 'no':
             typingPrint('.......', 0.05)
@@ -139,7 +140,7 @@ GGs''')
             typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
             wait(3)
             typingPrint('\nEND', 0.05)
-            progress = 0
+            progress = -1
     return progress
 # =======================
 # Game Flow / Options
@@ -212,13 +213,14 @@ def main():
             progress = 0
         elif progress in {5,6,7,8,9,10}:
             progress = Stair_Loop(progress)
-        elif progress == 46:
+        elif progress == 47:
             progress = -1
         else:
             progress += 1
     
             
 main()
+
 
 
 
