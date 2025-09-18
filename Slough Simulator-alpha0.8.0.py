@@ -3,7 +3,7 @@ from time import sleep
 
 
 
-DEBUG = True
+DEBUG = False
 
 # =======================
 # Printing Functions
@@ -58,12 +58,12 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             10 : 'The harsh incandescent lights buzz incessantly above you. Still, you take step after step after step...\n',
             
             11 : 'You make your way out of the car park, exiting through the doorway onto Buckingham Garden Street.\n',
-            12 : 'To your left, the narrow road seems to come to a junction. To your right, the road leads to a mysterious house of sogome kind.\n',
+            12 : 'To your left, the narrow road seems to come to a junction. To your right, the road leads to a mysterious house of some kind.\n',
             13 : 'What do you do? Gather your bearings at the junction or try your luck with the house?\n Commands available: go junction, go house\n',
             
             14 : 'Walking up to the house, you suddenly hear faint shouts. On closer inspection you witness an empty bottle of mayonnaise fly out the window,\npassing you.',
             15 : '\nA woman, around the age of 52, walks out of the house, and stares you in the eye.\n',
-            16 : '"You there. Could you do me a favour?\n"',
+            16 : '"You there. Could you do me a favour?"\n',
             17 : 'You nod apprehensively.\n',
             18 : 'The woman\'s complexion eases a little. \n"Good. I need a new bottle of Heinz Mayonnaise, and I\'d like you to get it for me from the Tesco across the road."\n',
             19 : 'Do you accept? Commands available: yes, no\n',
@@ -83,23 +83,23 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             30 : 'You nod in agreement. The woman sends you off back towards the junction.\n',
             
             31 : 'You walk in to the Tesco. ',
-            32 : '\nEntering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.'
-            33 : '\nYou see a worker in front. Since you can't see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.'
-            34 : '\n              '
-            35 : '\n.........'
-            36 : '\nThey disappeared before your eyes before you could talk to them.'
-            37 : '\nWeird.'
-            38 : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.'
-            39 : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n'
-            40 : '"What are you doing? Why are you holding those?\n"
-            41 : 'Looking down, the mayonnaise you were holding shifts. Your vision blurs and doubles for a moment.\n'
-            42 : '...........\n'
-            43 : 'In your hand is an orange pill bottle.\n'
-            44 : 'Looking up, in front of you is a woman wearing a lab coat.\n'
-            45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n'
-            46 : 'You black out.'
-            
-    }
+            32 : '\nEntering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.',
+            33 : '\nYou see a worker in front. Since you can\'t see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.',
+            34 : '\n              ',
+            35 : '\n.........',
+            36 : '\nThey disappeared before your eyes before you could talk to them.',
+            37 : '\nWeird.',
+            38 : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.',
+            39 : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n',
+            40 : '"What are you doing? Why are you holding those?"\n',
+            41 : 'Looking down, the mayonnaise you were holding shifts. Your vision blurs and doubles for a moment.\n',
+            42 : '...........\n',
+            43 : 'In your hand is an orange pill bottle.\n',
+            44 : 'Looking up, in front of you is a woman wearing a lab coat.\n',
+            45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n',
+            46 : 'You black out.',
+}
+    
 def Stair_Loop(progress):
     if progress == 5:
         stairInput = typingInput('Would you like to continue going up the stairs? \n')
@@ -126,19 +126,19 @@ They say insanity is doing the same thing over and over again, expecting a diffe
 GGs''')
             progress = 0
         elif stairInput.lower().strip() == 'no':
-            slowPrint('.......')
+            typingPrint('.......', 0.05)
             wait(2)
             typingPrint(' You step out.')
             wait(2)
             typingPrint('\nYou feel a gentle breeze, and looking above you shows a grey overcast sky.')
             wait(2)
-            slowPrint('\nYou\'ve made it to the top flo-')
+            typingPrint('\nYou\'ve made it to the top flo-', 0.05)
             wait(5)
-            slowerPrint('\nCRAAAAAAAASH!')
+            typingPrint('\nCRAAAAAAAASH!', 0.08)
             wait(4)
             typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
             wait(3)
-            slowPrint('\nEND')
+            typingPrint('\nEND', 0.05)
             progress = 0
     return progress
 # =======================
@@ -154,6 +154,8 @@ options = {
     19: {"yes": 30, "no": 20}, # Accept tesco quest?
     27: {"go tesco" : 31, "go travelodge" : 29, "go scrap metal" : 30} # junction (can also be after accepting tesco quest)
 }
+slow = [34, 35, 38, 40, 42, 44, 45]
+slower = [36, 41, 43, 46]
 choicePoints = set(options.keys())
 days = 1
 stairCount = 0
@@ -193,7 +195,12 @@ def main():
                 wait(2)
             else:
                 progress = -1
-        typingPrint(dialogue[progress])
+        if progress in slow:
+            typingPrint(dialogue[progress], 0.05)
+        elif progress in slower:
+            typingPrint(dialogue[progress], 0.08)
+        elif not progress in slow and not progress in slower:
+            typingPrint(dialogue[progress])
         if progress in checkPoints:
             savePoints.append(progress)
         if progress in choicePoints:
@@ -205,11 +212,15 @@ def main():
             progress = 0
         elif progress in {5,6,7,8,9,10}:
             progress = Stair_Loop(progress)
+        elif progress == 46:
+            progress = -1
         else:
             progress += 1
     
             
 main()
+
+
 
 
 
