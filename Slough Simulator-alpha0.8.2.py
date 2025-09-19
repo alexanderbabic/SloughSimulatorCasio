@@ -28,18 +28,6 @@ def typingInput(text, delay=0.02): # Typewriter-like input questioning (equivale
         sleep(effective_delay)
     return input()
         
-def slowPrint(text): # Slower text output for dramatic effect
-    for character in text:
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        sleep(0.06)
-        
-def slowerPrint(text): # Even slower text output for even more dramatic effect
-    for character in text:
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        sleep(0.08)
-        
 # =======================
 # Dialogue / Story
 # =======================
@@ -220,6 +208,7 @@ def main():
     
             
 main()
+
 
 
 
