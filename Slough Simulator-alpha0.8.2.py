@@ -1,4 +1,4 @@
-import random, sys, os
+import pygame, random, sys, os
 from time import sleep
 
 
@@ -13,10 +13,20 @@ def wait(delay):
     if not DEBUG:
         sleep(delay)
 
+pygame.mixer.init()
+typing_sounds = [pygame.mixer.Sound("click1.wav"),
+                 pygame.mixer.Sound("click2.wav"),
+                 pygame.mixer.Sound("click3.wav"),
+                 pygame.mixer.sound("click4.wav")]
+
+def play_typing_sound():
+    random.choice(typing_sounds).play()
+
 def typingPrint(text, delay=0.02): # Typewriter-like text output function
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
+        play_typing_sound()
         sys.stdout.flush()
         sleep(effective_delay)
 
@@ -24,6 +34,7 @@ def typingInput(text, delay=0.02): # Typewriter-like input questioning (equivale
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
+        play_typing_sound()
         sys.stdout.flush()
         sleep(effective_delay)
     return input()
@@ -208,6 +219,7 @@ def main():
     
             
 main()
+
 
 
 
