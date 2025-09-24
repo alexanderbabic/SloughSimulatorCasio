@@ -9,20 +9,20 @@ DEBUG = False
 # Printing Functions
 # =======================
 
-def wait(delay):
+def wait(delay):  # Used instead of sleep to accomodate debug options - no delay when DEBUG is True
     if not DEBUG:
         sleep(delay)
 
-pygame.mixer.init()
+pygame.mixer.init()  # Sound handling for typewriter effects
 typing_sounds = [pygame.mixer.Sound("click1.wav"),
                  pygame.mixer.Sound("click2.wav"),
                  pygame.mixer.Sound("click3.wav"),
                  pygame.mixer.sound("click4.wav")]
 
-def play_typing_sound():
+def play_typing_sound():  # Plays random click sound for each letter
     random.choice(typing_sounds).play()
 
-def typingPrint(text, delay=0.02): # Typewriter-like text output function
+def typingPrint(text, delay=0.05): # Typewriter-like text output function
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
@@ -30,7 +30,7 @@ def typingPrint(text, delay=0.02): # Typewriter-like text output function
         sys.stdout.flush()
         sleep(effective_delay)
 
-def typingInput(text, delay=0.02): # Typewriter-like input questioning (equivalent to print(" "))
+def typingInput(text, delay=0.05): # Typewriter-like input function
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
@@ -97,10 +97,9 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             44 : 'Looking up, in front of you is a woman wearing a lab coat.\n',
             45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n',
             46 : 'You black out.\n',
-            47 : 'END'
 }
     
-def Stair_Loop(progress):
+def Stair_Loop(progress):  # Function that contains the logic of the stair loop section of the game
     if progress == 5:
         stairInput = typingInput('Would you like to continue going up the stairs? \n')
         if stairInput.lower().strip() == 'no':
@@ -126,39 +125,55 @@ They say insanity is doing the same thing over and over again, expecting a diffe
 GGs\n''')
             progress = 0
         elif stairInput.lower().strip() == 'no':
-            typingPrint('.......', 0.05)
+            typingPrint('.......', 0.08)
             wait(2)
             typingPrint(' You step out.')
             wait(2)
             typingPrint('\nYou feel a gentle breeze, and looking above you shows a grey overcast sky.')
             wait(2)
-            typingPrint('\nYou\'ve made it to the top flo-', 0.05)
+            typingPrint('\nYou\'ve made it to the top flo-', 0.08)
             wait(5)
-            typingPrint('\nCRAAAAAAAASH!', 0.08)
+            typingPrint('\nCRAAAAAAAASH!', 0.1)
             wait(4)
             typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
             wait(3)
-            typingPrint('\nEND', 0.05)
+            typingPrint('\nEND', 0.08)
             progress = -1
     return progress
+    
 # =======================
 # Game Flow / Options
 # =======================
 
-deathPoints = [4,24]
-checkPoints = [3]
-savePoints = []
-options = {
+deathPoints = [4,24] # The dialogue points where the game should end/reset
+checkPoints = [3] # Dialogue points the player can reset to
+savePoints = [] # Checkpoints the player has unlocked
+
+options = { # the branching paths when a player makes a decision
     3: {"go car": 4, "go stairs": 5, "go exit": 11}, # Car park choice
     13: {"go junction": 25, "go house": 14}, # After taking exit
     19: {"yes": 30, "no": 20}, # Accept tesco quest?
     27: {"go tesco" : 31, "go travelodge" : 29, "go scrap metal" : 30} # junction (can also be after accepting tesco quest)
 }
-slow = [34, 35, 38, 40, 42, 44, 45]
+
+slow = [34, 35, 38, 40, 42, 44, 45] # Dialogue points where the typing speed is changed
 slower = [36, 41, 43, 46]
-choicePoints = set(options.keys())
+
+choicePoints = set(options.keys()) # All the dialogue points the player makes a decision
+
 days = 1
+
 stairCount = 0
+
+def Reset(): # Allows the player to restart or end the game
+    reset = typingInput('Restart at last save point? yes/no\n')
+            if reset.lower().strip() == 'yes':
+                progress = savePoints[-1]
+                typingPrint('returning to save point......\n')
+                os.system('cls')
+                wait(2)
+            else:
+                progress = -1
 
 # =======================
 # Input Handling
@@ -182,23 +197,17 @@ def Check_Input(userIn, p):
 # =======================
 # Main Game Loop
 # =======================
+
 def main():
     progress = 1
     while progress != -1:
         wait(0.5)
         if progress == 0:
-            reset = typingInput('Restart at last save point? yes/no\n')
-            if reset.lower().strip() == 'yes':
-                progress = savePoints[-1]
-                typingPrint('returning to save point......\n')
-                os.system('cls')
-                wait(2)
-            else:
-                progress = -1
+            Reset()
         if progress in slow:
-            typingPrint(dialogue[progress], 0.05)
-        elif progress in slower:
             typingPrint(dialogue[progress], 0.08)
+        elif progress in slower:
+            typingPrint(dialogue[progress], 0.1)
         elif not progress in slow and not progress in slower:
             typingPrint(dialogue[progress])
         if progress in checkPoints:
@@ -212,13 +221,14 @@ def main():
             progress = 0
         elif progress in {5,6,7,8,9,10}:
             progress = Stair_Loop(progress)
-        elif progress == 47:
-            progress = -1
+        elif progress == 46:
+            break
         else:
             progress += 1
     
             
 main()
+
 
 
 
