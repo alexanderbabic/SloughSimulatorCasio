@@ -17,24 +17,26 @@ pygame.mixer.init()  # Sound handling for typewriter effects
 typing_sounds = [pygame.mixer.Sound("click1.wav"),
                  pygame.mixer.Sound("click2.wav"),
                  pygame.mixer.Sound("click3.wav"),
-                 pygame.mixer.sound("click4.wav")]
+                 pygame.mixer.Sound("click4.wav")]
 
 def play_typing_sound():  # Plays random click sound for each letter
     random.choice(typing_sounds).play()
 
-def typingPrint(text, delay=0.05): # Typewriter-like text output function
+def typingPrint(text, delay=0.05, sound=True): # Typewriter-like text output function
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
-        play_typing_sound()
+        if sound:    
+            play_typing_sound()
         sys.stdout.flush()
         sleep(effective_delay)
 
-def typingInput(text, delay=0.05): # Typewriter-like input function
+def typingInput(text, delay=0.05, sound=True): # Typewriter-like input function
     effective_delay = 0 if DEBUG else delay
     for character in text:
         sys.stdout.write(character)
-        play_typing_sound()
+        if sound:    
+            play_typing_sound()
         sys.stdout.flush()
         sleep(effective_delay)
     return input()
@@ -167,19 +169,20 @@ stairCount = 0
 
 def Reset(): # Allows the player to restart or end the game
     reset = typingInput('Restart at last save point? yes/no\n')
-            if reset.lower().strip() == 'yes':
-                progress = savePoints[-1]
-                typingPrint('returning to save point......\n')
-                os.system('cls')
-                wait(2)
-            else:
-                progress = -1
+    if reset.lower().strip() == 'yes':
+        progress = savePoints[-1]
+        typingPrint('returning to save point......\n')
+        os.system('cls')
+        wait(2)
+    else:
+        progress = -1
 
 # =======================
 # Input Handling
 # =======================
 
 def inputCommand():
+    wait(0.1)
     userInput = typingInput("\nMake your choice: ")
     return userInput
     
@@ -201,13 +204,13 @@ def Check_Input(userIn, p):
 def main():
     progress = 1
     while progress != -1:
-        wait(0.5)
+        wait(random.randint(10,50)/100)
         if progress == 0:
             Reset()
         if progress in slow:
-            typingPrint(dialogue[progress], 0.08)
+            typingPrint(dialogue[progress], 0.08, False)
         elif progress in slower:
-            typingPrint(dialogue[progress], 0.1)
+            typingPrint(dialogue[progress], 0.1, False)
         elif not progress in slow and not progress in slower:
             typingPrint(dialogue[progress])
         if progress in checkPoints:
@@ -228,6 +231,7 @@ def main():
     
             
 main()
+
 
 
 
