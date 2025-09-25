@@ -1,13 +1,22 @@
-import pygame, random, sys, os
+import pygame, random, sys, os, msvcrt
 from time import sleep
 
 
 
 DEBUG = False
 
+
 # =======================
 # Printing Functions
 # =======================
+
+def wait_for_key():
+    print("Press any key to start...")
+    msvcrt.getch()  # waits for one key press
+
+def clear_screen():
+    # Windows = cls, others = clear
+    os.system("cls" if os.name == "nt" else "clear")
 
 def wait(delay):  # Used instead of sleep to accomodate debug options - no delay when DEBUG is True
     if not DEBUG:
@@ -88,7 +97,7 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             33 : '\nYou see a worker in front. Since you can\'t see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.',
             34 : '\n              ',
             35 : '\n.........',
-            36 : '\nThey disappeared before your eyes before you could talk to them.',
+            36 : '\nThey disappeared before your eyes, leaving no chance for you to talk to them.',
             37 : '\nWeird.',
             38 : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.',
             39 : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n',
@@ -172,10 +181,12 @@ def Reset(): # Allows the player to restart or end the game
     if reset.lower().strip() == 'yes':
         progress = savePoints[-1]
         typingPrint('returning to save point......\n')
-        os.system('cls')
+        clear_screen()
         wait(2)
+        return progress
     else:
         progress = -1
+        return progress
 
 # =======================
 # Input Handling
@@ -202,11 +213,13 @@ def Check_Input(userIn, p):
 # =======================
 
 def main():
+    wait_for_key()
+    clear_screen()
     progress = 1
     while progress != -1:
         wait(random.randint(1,10)/10)
         if progress == 0:
-            Reset()
+            progress = Reset()
         if progress in slow:
             typingPrint(dialogue[progress], 0.08, False)
         elif progress in slower:
@@ -228,6 +241,6 @@ def main():
             break
         else:
             progress += 1
-    
+    clear_screen()
             
 main()
