@@ -157,7 +157,7 @@ GGs\n''')
 # =======================
 
 deathPoints = [4,24] # The dialogue points where the game should end/reset
-checkPoints = [3] # Dialogue points the player can reset to
+checkPoints = [3,13,19] # Dialogue points the player can reset to
 savePoints = [] # Checkpoints the player has unlocked
 
 options = { # the branching paths when a player makes a decision
@@ -244,3 +244,4 @@ def main():
     clear_screen()
             
 main()
+
