@@ -127,7 +127,7 @@ They say insanity is doing the same thing over and over again, expecting a diffe
 GGs\n''')
             progress = 0
         elif stairInput.lower().strip() == 'no':
-            typingPrint('.......', 0.08)
+            typingPrint('.......', 0.08, False)
             wait(2)
             typingPrint(' You step out.')
             wait(2)
@@ -135,7 +135,7 @@ GGs\n''')
             wait(2)
             typingPrint('\nYou\'ve made it to the top flo-', 0.08)
             wait(5)
-            typingPrint('\nCRAAAAAAAASH!', 0.1)
+            typingPrint('\nCRAAAAAAAASH!', 0.3)
             wait(4)
             typingPrint('\nYou\'re hit by an inconspicous Honda Accord, trying to park in the spot you walked onto.')
             wait(3)
@@ -182,7 +182,7 @@ def Reset(): # Allows the player to restart or end the game
 # =======================
 
 def inputCommand():
-    wait(0.1)
+    wait(0.4)
     userInput = typingInput("\nMake your choice: ")
     return userInput
     
@@ -204,7 +204,7 @@ def Check_Input(userIn, p):
 def main():
     progress = 1
     while progress != -1:
-        wait(random.randint(10,50)/100)
+        wait(random.randint(1,10)/10)
         if progress == 0:
             Reset()
         if progress in slow:
@@ -231,15 +231,3 @@ def main():
     
             
 main()
-
-
-
-
-
-
-
-
-
-
-
-
