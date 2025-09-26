@@ -87,31 +87,27 @@ dialogue = {1 : 'You wake up in Herschel Car Park in Slough. Getting up, you\'re
             25 : 'You walk steadily over to the collection of traffic lights, avoiding cars parked on double yellows and puddles of unknown substances.\n',
             26 : 'As you cross the main road, you see signs pointing to Tesco, Travelodge and WeBuyScrapMetal™.\n',
             27 : 'What do you do? Gather supplies in Tesco, look for a bed in the Travelodge or sell scrap metal?\n Commands available: go tesco, go travelodge, go scrap metal\n',
-
-            28 : 'You walk in to the Tesco.\n',
-            29 : 'Entering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.\n',
-            30 : 'You decide to wander through the aisles in the hope you find something useful.\n',
-            31 : 'As you begin to make your way through aisle after aisle, they seem to 
-             : 'Travelodge',
-             : 'Scrap metal',
             
-             : 'You nod in agreement. The woman sends you off back towards the junction.\n',
-             : 'You walk in to the Tesco. ',
-             : '\nEntering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.',
-             : '\nYou see a worker in front. Since you can\'t see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.',
-             : '\n              ',
-             : '\n.........',
-             : '\nThey disappeared before your eyes, leaving no chance for you to talk to them.',
-             : '\nWeird.',
-             : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.',
-             : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n',
-             : '"What are you doing? Why are you holding those?"\n',
-             : 'Looking down, the mayonnaise you were holding shifts. Your vision blurs and doubles for a moment.\n',
-             : '...........\n',
-             : 'In your hand is an orange pill bottle.\n',
-             : 'Looking up, in front of you is a woman wearing a lab coat.\n',
-             : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n',
-             : 'You black out.\n',
+            28 : 'Travelodge',
+            29 : 'Scrap metal',
+            30 : 'You nod in agreement. The woman sends you off back towards the junction.\n',
+            
+            31 : 'You walk in to the Tesco. ',
+            32 : '\nEntering, you see rows of aisles in front of you. Direction signs hang on the ceiling above, though too far for you to make out clearly.',
+            33 : '\nYou see a worker in front. Since you can\'t see the mayonnaise anywhere in sight, you decide to walk up to them to inquire about its whereabouts.',
+            34 : '\n              ',
+            35 : '\n.........',
+            36 : '\nThey disappeared before your eyes, leaving no chance for you to talk to them.',
+            37 : '\nWeird.',
+            38 : '\nGlancing to your hand you see the mayonnaise already in your hand. You exit the Tesco.',
+            39 : '\nThe house is right in front of the exit. The woman who sent you to Tesco stands there, confusion etched into her face.\n',
+            40 : '"What are you doing? Why are you holding those?"\n',
+            41 : 'Looking down, the mayonnaise you were holding shifts. Your vision blurs and doubles for a moment.\n',
+            42 : '...........\n',
+            43 : 'In your hand is an orange pill bottle.\n',
+            44 : 'Looking up, in front of you is a woman wearing a lab coat.\n',
+            45 : 'Your vision doubles and blackens. The surroundings begin to shift and move, revealing white, tiled walls and a hospital bed next to you.\n',
+            46 : 'You black out.\n',
 }
     
 def Stair_Loop(progress):  # Function that contains the logic of the stair loop section of the game
@@ -186,7 +182,22 @@ def Reset(): # Allows the player to restart or end the game
         progress = savePoints[-1]
         typingPrint('returning to save point......\n')
         clear_screen()
-        wait(2)
+        typingPrint('......',0.1,False)
+        wait(0.1)
+        clear_screen()
+        typingPrint('......',0.1,False)
+        wait(0.1)
+        clear_screen()
+        typingPrint('......',0.1,False)
+        wait(0.1)
+        clear_screen()
+        typingPrint('......',0.1,False)
+        wait(0.1)
+        clear_screen()
+        typingPrint('......',0.1,False)
+        wait(0.1)
+        clear_screen()
+        wait(1)
         return progress
     else:
         progress = -1
@@ -207,6 +218,12 @@ def Check_Input(userIn, p):
         return p
     elif userIn.lower().strip() in options.get(p, {}):
         return options[p][userIn]
+    elif userIn.lower().strip() == "dev_quit":
+        p = -1
+        return p
+    elif userIn.lower().strip() == f"go prog_":
+        p = int(input())
+        return p 
     else:
         typingPrint("Invalid command. Try again.\n")
         return p
@@ -248,6 +265,4 @@ def main():
     clear_screen()
             
 main()
-
-
 
